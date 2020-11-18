@@ -17,11 +17,11 @@ function is_seven_letters_long($string)
   return $bool;
 }
 
-is_seven_letters_long('asdfghj');
+// is_seven_letters_long('asdfghj');
 
-add_action('wp_footer', 'funkis');
+// add_action('wp_footer', 'funkis');
 
-function funkis()
-{
-  var_dump(is_seven_letters_long('asdfghj'));
-}
+// function funkis()
+// {
+//   var_dump(is_seven_letters_long('asdfghj'));
+// }
