@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Counter-funk
  * Author: Putte 
- * Description: Detta är ett plugin som erbjuder en räknefunktion: "is_seven_letters_long"
+ * Description: Detta är ett plugin som erbjuder en räknefunktion: "is_seven_letters_long".
  */
 
 
