@@ -20,12 +20,12 @@ function get_weather()
   return $api_response['properties']['timeseries'][0]['data']['instant']['details'];
 }
 
-function print_weather($weatherdata)
+function print_weather($data)
 {
   echo "<p>Dagens väder i Götlaborg</p>";
-  echo '<p>Temp: ' . $weatherdata['air_temperature'] . ' C</p>';
-  echo '<p>Vind: ' . $weatherdata['wind_speed'] . ' m/s</p>';
+  echo '<p>Temp: ' . $data['air_temperature'] . ' C</p>';
+  echo '<p>Vind: ' . $data['wind_speed'] . ' m/s</p>';
 }
 
-$wdata = get_weather();
-print_weather($wdata);
+$weatherdata = get_weather();
+print_weather($weatherdata);
