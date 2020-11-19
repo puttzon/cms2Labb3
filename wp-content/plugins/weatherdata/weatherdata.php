@@ -27,5 +27,17 @@ function print_weather($data)
   echo '<p>Vind: ' . $data['wind_speed'] . ' m/s</p>';
 }
 
-$weatherdata = get_weather();
-print_weather($weatherdata);
+function trans()
+{
+  $transient = get_transient('weather_data');
+
+  if ($transient) {
+    $wd = get_transient('weather_data');
+  } else {
+    $wd = get_weather();
+    set_transient('weather_data', $wd, 3600);
+  }
+  print_weather($wd);
+}
+
+add_action('wp_head', 'trans');
