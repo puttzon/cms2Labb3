@@ -1,3 +1,1 @@
-# cms2Labb3
-# cms2Labb3
-# cms2Labb3
+Egna plugins till Wordpress, en del av CMS2 kursen.
