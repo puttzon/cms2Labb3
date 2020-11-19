@@ -55,4 +55,8 @@ function option_page()
 }
 
 add_action('acf/init', 'option_page');
-add_action('wp_head', 'trans');
+add_action('woocommerce_before_shop_loop_item', 'trans'); // Shop 
+add_action('woocommerce_before_single_product', 'trans'); // Single product
+add_action('woocommerce_cart_is_empty', 'trans'); // Cart empty
+add_action('woocommerce_account_content', 'trans'); // My account
+add_action('woocommerce_review_order_before_payment', 'trans', 15); // My account
