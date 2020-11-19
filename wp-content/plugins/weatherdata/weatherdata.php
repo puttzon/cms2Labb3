@@ -23,9 +23,11 @@ function get_weather()
 // Skriver ut väderdatan
 function print_weather($data)
 {
+  echo '<div id="vdiv">';
   echo "<p>Dagens väder i Götlaborg</p>";
   echo '<p>Temp: ' . $data['air_temperature'] . ' C</p>';
   echo '<p>Vind: ' . $data['wind_speed'] . ' m/s</p>';
+  echo '</div>';
 }
 
 // Funktion för transients
@@ -54,9 +56,46 @@ function option_page()
   ]);
 }
 
+
+
+
 add_action('acf/init', 'option_page');
-add_action('woocommerce_before_shop_loop_item', 'trans'); // Shop 
-add_action('woocommerce_before_single_product', 'trans'); // Single product
-add_action('woocommerce_cart_is_empty', 'trans'); // Cart empty
-add_action('woocommerce_account_content', 'trans'); // My account
-add_action('woocommerce_review_order_before_payment', 'trans', 15); // My account
+
+// Funktion för radioknappar
+add_action('wp_head', 'page_view');
+
+function page_view()
+{
+  $plats = get_field('options', 'option');
+
+  if ($plats === 'Shop') {
+    add_action('woocommerce_before_shop_loop_item', 'trans');
+  }
+  if ($plats === 'Single') {
+    add_action('woocommerce_before_single_product', 'trans');
+  }
+  if ($plats === 'Cart') {
+    add_action('woocommerce_cart_is_empty', 'trans');
+  }
+  if ($plats === 'Account') {
+    add_action('woocommerce_account_content', 'trans');
+  }
+  if ($plats === 'Checkout') {
+    add_action('woocommerce_review_order_before_payment', 'trans', 15);
+  }
+}
+
+//add_action('woocommerce_before_shop_loop_item', 'trans'); // Shop 
+//add_action('woocommerce_before_single_product', 'trans'); // Single product
+//add_action('woocommerce_cart_is_empty', 'trans'); // Cart empty
+//add_action('woocommerce_account_content', 'trans'); // My account
+//add_action('woocommerce_review_order_before_payment', 'trans', 15); // My account
+?>
+
+<style>
+  #vdiv {
+    background: #555;
+    padding: .5em;
+    color: white;
+  }
+</style>
