@@ -20,6 +20,7 @@ function get_weather()
   return $api_response['properties']['timeseries'][0]['data']['instant']['details'];
 }
 
+// Skriver ut väderdatan
 function print_weather($data)
 {
   echo "<p>Dagens väder i Götlaborg</p>";
@@ -27,6 +28,7 @@ function print_weather($data)
   echo '<p>Vind: ' . $data['wind_speed'] . ' m/s</p>';
 }
 
+// Funktion för transients
 function trans()
 {
   $transient = get_transient('weather_data');
@@ -40,4 +42,17 @@ function trans()
   print_weather($wd);
 }
 
+//Options
+function option_page()
+{
+  acf_add_options_page([
+    'page_title' => 'Väder plugin',
+    'menu_title' => 'Väder plugin',
+    'menu_slug' => 'Väder-settings',
+    'capability' => 'edit_posts',
+    'redirect' => false
+  ]);
+}
+
+add_action('acf/init', 'option_page');
 add_action('wp_head', 'trans');
