@@ -7,39 +7,72 @@
  * (Ungefär som pluginet Contactform7 med Flamingo.)
  * Tips: Formulär/ajax/register_posttype/insert_post/post_meta
  */
-?>
 
-<!DOCTYPE html>
-<html lang="en">
+class form
+{
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+  public function __construct()
+  {
+    add_action('woocommerce_account_content', [$this, 'formdata'], 20);
+    add_action('init', [$this, 'messages']);
+    //add_action('wp_ajax_kontaktformular', [$this, 'action_res']);
+    add_action('wp_ajax_kontaktformular', [$this, 'get_posts']);
+  }
 
-<body>
-  <?php
-  function form()
+  public function formdata()
   { ?>
-    <section id="formsection">
+    <form action=" <?php echo admin_url('admin-ajax.php'); ?> ">
+      <label for="name">Name</label>
+      <input type="text" name="name">
+      <label for="email">Email</label>
+      <input type="email" name="email">
+      <label for="message">Message</label>
+      <textarea name="message" cols="30" rows="10"></textarea>
+      <input type="submit" value="Send" style="margin-top: .5em;">
+      <input type="hidden" name="action" value="kontaktformular">
+    </form>
 
-      <form action="" method="post">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="">
-        <label for="mail">Mail</label>
-        <input type="email" name="mail" id="">
-        <label for="message">Message</label>
-        <textarea name="message" id="" cols="30" rows="10"></textarea>
-        <input type="submit" value="Send">
-      </form>
+    <?php
+    if (isset($_REQUEST['sent'])) {
+      echo 'Fan va najs!';
+    }
+    ?>
+<?php }
 
-    </section>
-  <?php }
-  ?>
-</body>
+  // public function action_res()
+  // {
+  //   echo 'Tack för ditt meddelande ' . $_REQUEST['name'];
+  //   die();
+  // }
 
-</html>
+  public function messages()
+  {
+    register_post_type('meddelanden', [
+      'labels' => [
+        'name' => __('Meddelanden'),
+        'singular_name' => __('Meddelande')
+      ],
+      'public' => true,
+      'has_archive' => true
+    ]);
+  }
 
-<?php
-add_action('woocommerce_account_content', 'form', 20);
+  public function get_posts()
+  {
+    $post_id = wp_insert_post(array(
+      'post_title' => $_REQUEST['name'],
+      'post_content' => $_REQUEST['message'],
+      'post_type' => 'Meddelanden'
+    ));
+    update_post_meta($post_id, 'email', $_REQUEST['email']);
+    // echo '<pre>';
+    // var_dump($_SERVER['HTTP_REFERER']);
+    // die();
+    wp_redirect($_SERVER['HTTP_REFERER'] . '?sent=true');
+    die();
+  }
+}
+// insert post returnerar
+// id, postmeta
+$newform = new form();
+?>

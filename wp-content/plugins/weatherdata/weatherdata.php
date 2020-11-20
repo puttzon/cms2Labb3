@@ -84,7 +84,7 @@ class weather_app
   public function __construct()
   {
     add_action('wp_head', [$this, 'page_view']);
-    add_action('acf/init', 'option_page');
+    add_action('acf/init', [$this, 'option_page']);
   }
 }
 
