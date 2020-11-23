@@ -10,15 +10,15 @@
 
 class form
 {
-
+  // Kör alla action i construct
   public function __construct()
   {
     add_action('woocommerce_account_content', [$this, 'formdata'], 20);
     add_action('init', [$this, 'messages']);
-    //add_action('wp_ajax_kontaktformular', [$this, 'action_res']);
     add_action('wp_ajax_kontaktformular', [$this, 'get_posts']);
   }
 
+  //Formulär
   public function formdata()
   { ?>
     <form action=" <?php echo admin_url('admin-ajax.php'); ?> ">
@@ -33,18 +33,14 @@ class form
     </form>
 
     <?php
+    //Returnerar tack om redirect sent är satt
     if (isset($_REQUEST['sent'])) {
-      echo 'Fan va najs!';
+      echo 'Tack för ditt meddeland.';
     }
     ?>
 <?php }
 
-  // public function action_res()
-  // {
-  //   echo 'Tack för ditt meddelande ' . $_REQUEST['name'];
-  //   die();
-  // }
-
+  //Egen posttype
   public function messages()
   {
     register_post_type('meddelanden', [
@@ -56,7 +52,7 @@ class form
       'has_archive' => true
     ]);
   }
-
+  // Tar emot formulär data och skickar till Meddelande
   public function get_posts()
   {
     $post_id = wp_insert_post(array(
@@ -64,15 +60,13 @@ class form
       'post_content' => $_REQUEST['message'],
       'post_type' => 'Meddelanden'
     ));
+    //Hämtar email, visar mail med acf
     update_post_meta($post_id, 'email', $_REQUEST['email']);
-    // echo '<pre>';
-    // var_dump($_SERVER['HTTP_REFERER']);
-    // die();
+    //Redirect efter skickat formulär
     wp_redirect($_SERVER['HTTP_REFERER'] . '?sent=true');
     die();
   }
 }
-// insert post returnerar
-// id, postmeta
+
 $newform = new form();
 ?>
