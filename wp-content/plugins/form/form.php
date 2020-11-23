@@ -21,7 +21,10 @@ class form
   //Formulär
   public function formdata()
   { ?>
-    <form action=" <?php echo admin_url('admin-ajax.php'); ?> ">
+    <form action="
+    <?php echo admin_url('admin-ajax.php');
+    echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+
       <label for="name">Name</label>
       <input type="text" name="name">
       <label for="email">Email</label>
