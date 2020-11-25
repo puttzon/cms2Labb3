@@ -9,6 +9,7 @@
  * Se till att cachea den hämtade datan så att inte api:et tillfrågas mer än ca en gång per timme, oavsett hur många sidträffar som sker.
  */
 
+require 'weather-acf.php';
 
 //Funktionen för att hämta API
 class weather_app

@@ -8,6 +8,8 @@
  * Tips: Formulär/ajax/register_posttype/insert_post/post_meta
  */
 
+require 'form-acf.php';
+
 class form
 {
   // Kör alla action i construct
