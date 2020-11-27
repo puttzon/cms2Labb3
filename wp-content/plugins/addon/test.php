@@ -18,24 +18,34 @@
 class test_app
 {
 
-  public function test_function($string, $förväntat_returvärde)
+  public function test_function($strangen_som_ska_testas, $forvantat_returvarde)
   {
     $newtest = new counter();
-    $test = $newtest->is_seven_letters_long($string);
+    $test = $newtest->is_seven_letters_long($strangen_som_ska_testas);
 
-    if ($test == $förväntat_returvärde) {
+    if ($test == $forvantat_returvarde) {
       echo '<p>Lyckat test!</p>';
     } else {
       echo '<p class="error">Test misslyckades</p>';
     }
   }
+
+  public function run_test()
+  {
+    $six = 'asdfgh';
+    $seven = 'asdfghj';
+    $nine = 'asdfghjkl';
+    $this->test_function($six, false);
+    $this->test_function($seven, true);
+    $this->test_function($nine, false);
+  }
   public function __construct()
   {
-    add_action('wp_head', [$this, 'testforsevenletter']);
+    add_action('wp_head', [$this, 'run_test']);
   }
 }
-$runtest = new test_app();
-//Får inte denna att fungera. Får varning: Warning: call_user_func_array() expects parameter 1 to be a valid callback, class 'test_app' does not have a method 'testforsevenletter' in /Applications/MAMP/htdocs/CMS2/labb3/wp-includes/class-wp-hook.php on line 287. Men jag har testat olika saker fram och tillbaka.
+$runtestone = new test_app();
+
 ?>
 
 <style>
